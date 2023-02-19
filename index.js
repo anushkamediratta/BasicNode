@@ -2,32 +2,63 @@
 const express=require('express')
 const app=express()
 
-function mymiddleware (req,res,next){
-    console.log("hi this is middleware")
-    next()
-}
+// function mymiddleware (req,res,next){
+//     console.log("hi this is middleware")
+//     next()
+// }
 
-app.use(mymiddleware)
+// app.use(mymiddleware)
 
 
-app.get("/",mymiddleware,(req,res)=>{
-    res.send("hi this is the get request ")
+// app.get("/",mymiddleware,(req,res)=>{
+//     res.send("hi this is the get request ")
+// })
+
+// app.get('/test',mymiddleware,(req,res)=>{
+//     res.send("This is Test URL")
+// })
+
+// app.post("/",(req,res)=>{
+//     res.send("hi this is the post request")
+// })
+
+// app.put("/",(req,res)=>{
+//     res.send("hi this is the put request")
+// })
+
+// app.delete("/",(req,res)=>{
+//     res.send("hi this is the delete request")
+// })
+
+const members=[{
+    id:1,
+    name:"John Doe",
+    email:"john@gmail.com",
+    status:"active"
+
+},{
+    id:2,
+    name:"Jane Doe",
+    email:"jane@gmail.com",
+    status:"inactive"
+},{
+    id:3,
+    name:"stevekruzz",
+    email:"steve@gmail.com",
+    status:"active"
+}]
+
+app.get("/showAllUser",(req,res)=>{
+    res.status(200).json(members)
 })
 
-app.get('/test',mymiddleware,(req,res)=>{
-    res.send("This is Test URL")
-})
+app.get("/showUser/:uid",(req,res)=>{
+   const id=req.params.uid
 
-app.post("/",(req,res)=>{
-    res.send("hi this is the post request")
-})
-
-app.put("/",(req,res)=>{
-    res.send("hi this is the put request")
-})
-
-app.delete("/",(req,res)=>{
-    res.send("hi this is the delete request")
+   const user=members.filter(member=>member.id=== parseInt(id))
+   user.length !==0 ? res.status(200).json(user) : res.status(200).json({msg:"User Not Found"})
+//    console.log(user)
+//    res.status(200).json(user)
 })
 
 const PORT=3000
