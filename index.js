@@ -48,7 +48,7 @@ const members=[{
     email:"steve@gmail.com",
     status:"active"
 }]
-app.use(express.json())
+app.use(express.json())//accept the json data
 
 app.get("/showAllUser",(req,res)=>{
     res.status(200).json(members)
@@ -71,7 +71,17 @@ app.post('/addUser/',(req,res)=>{
     members.push({id:uuid.v4(),name,email})
     res.status(200).json(members)
 })
-
+app.post('/adduser',(req,res)=>{
+    const{name,email}=req.body
+    const newMember={
+        id:uuid.v4(),
+        email,
+        name,
+        status:"inactive"
+    }
+    members.push(newMember)
+    res.status(200).json(members)
+})
 
 const PORT=process.env.PORT || 3000
 app.listen(PORT,()=>console.log(`Server is running at ${PORT}`))
