@@ -82,6 +82,18 @@ app.post('/adduser',(req,res)=>{
     members.push(newMember)
     res.status(200).json(members)
 })
+app.delete("/deleteuser/:uid",(req,res)=>{
+    const id=parseInt(req.params.uid)
+    const found=members.some(member => member.id === id)
+    if(found){
+        const results=members.filter(member=>member.id !== id)
+        res.status(200).json(results)
+
+    }else{
+        res.status(400).json({msg: `No member found with the id of ${id}`})
+    }
+    
+})
 
 const PORT=process.env.PORT || 3000
 app.listen(PORT,()=>console.log(`Server is running at ${PORT}`))
