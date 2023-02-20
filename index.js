@@ -47,6 +47,7 @@ const members=[{
     email:"steve@gmail.com",
     status:"active"
 }]
+app.use(express.json())
 
 app.get("/showAllUser",(req,res)=>{
     res.status(200).json(members)
@@ -60,6 +61,10 @@ app.get("/showUser/:uid",(req,res)=>{
 //    console.log(user)
 //    res.status(200).json(user)
 })
+app.post('/addUser/',(req,res)=>{
+    console.log(req.body)
+})
 
-const PORT=3000
+
+const PORT=process.env.PORT || 3000
 app.listen(PORT,()=>console.log(`Server is running at ${PORT}`))
