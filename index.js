@@ -1,5 +1,6 @@
 
 const express=require('express')
+const uuid=require('uuid')
 const app=express()
 
 // function mymiddleware (req,res,next){
@@ -52,7 +53,7 @@ app.use(express.json())
 app.get("/showAllUser",(req,res)=>{
     res.status(200).json(members)
 })
-
+// show user
 app.get("/showUser/:uid",(req,res)=>{
    const id=req.params.uid
 
@@ -61,8 +62,14 @@ app.get("/showUser/:uid",(req,res)=>{
 //    console.log(user)
 //    res.status(200).json(user)
 })
+// add user
 app.post('/addUser/',(req,res)=>{
-    console.log(req.body)
+    // const name=req.body.name
+    // const email=req.body.email
+    // const password=req.body.password
+    const{email,name,password}={...req.body}
+    members.push({id:uuid.v4(),name,email})
+    res.status(200).json(members)
 })
 
 
